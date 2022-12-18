@@ -1,19 +1,19 @@
 import chalk from "chalk";
 import connectionDB from "../../database/database.js";
 
-export async function existingShortUrl(req, res, next) {
+export async function existingId(req, res, next) {
   const id = req.params.id;
   try {
-    const existingShortUrl = await connectionDB.query(
+    const existingId = await connectionDB.query(
       `SELECT * FROM urls WHERE id = $1;`,
       [id]
     );
-    if (!existingShortUrl.rowCount) {
-      console.log(chalk.red("MW: existingShortUrl failed!"));
+    if (!existingId.rowCount) {
+      console.log(chalk.red("MW: existingId failed!"));
       return res.status(404).send({ message: "Url não encontrada!" });
     } else {
-      console.log(chalk.yellow("MW: existingShortUrl passed..."));
-      res.locals.existingShortUrl = existingShortUrl.rows[0];
+      console.log(chalk.yellow("MW: existingId passed..."));
+      res.locals.existingId = existingId.rows[0];
     }
   } catch (err) {
     console.log(err);
