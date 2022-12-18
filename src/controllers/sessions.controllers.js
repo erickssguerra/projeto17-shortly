@@ -3,7 +3,7 @@ import connectionDB from "../database/database.js";
 import { nanoid as tokenGenerator } from "nanoid";
 
 export async function postSignIn(req, res) {
-  const user = res.locals.authorizedUser;
+  const user = res.locals.loggedUser;
   const token = tokenGenerator(50);
   try {
     await connectionDB.query(

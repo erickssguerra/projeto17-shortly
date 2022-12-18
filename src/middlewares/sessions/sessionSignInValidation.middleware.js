@@ -23,7 +23,7 @@ export async function singInValidation(req, res, next) {
     else {
         delete existingUser.rows[0].password
         console.log(chalk.yellow("MW: signInValidation passed..."))
-        res.locals.authorizedUser = existingUser.rows[0]
+        res.locals.loggedUser = existingUser.rows[0]
     }
   } catch (err) {
     console.log(err);
