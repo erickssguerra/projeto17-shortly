@@ -5,7 +5,7 @@ export async function authValidation(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   if (!token) {
-    console.log(chalk.red("MW: authValidation failed 1!"));
+    console.log(chalk.red("MW: authValidation failed!"));
     return res
       .status(401)
       .send({ message: "Problema na autenticação. Faça login de novo!" });
@@ -18,7 +18,7 @@ export async function authValidation(req, res, next) {
       [token]
     );
     if (!session.rowCount) {
-      console.log(chalk.red("MW: authValidation failed 2!"));
+      console.log(chalk.red("MW: authValidation failed!"));
       return res
         .status(401)
         .send({ message: "Problema na autenticação. Faça login de novo!" });
@@ -31,7 +31,7 @@ export async function authValidation(req, res, next) {
     );
 
     if (!user.rowCount) {
-      console.log(chalk.red("MW: authValidation failed! 3"));
+      console.log(chalk.red("MW: authValidation failed!"));
       return res
         .status(401)
         .send({ message: "Problema na autenticação. Faça login de novo!" });
