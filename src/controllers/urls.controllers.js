@@ -27,7 +27,16 @@ export async function getUrlById(req, res) {
 }
 
 export async function getUrlOpen(req, res) {
-  const { id, url, shortUrl } = res.locals.existingShortUrl;
-  
-  res.status(200).send({ id, url, shortUrl })
+  const { id, url } = res.locals.existingShortUrl;
+  try {
+    await connectionDB.query(
+      `UPDATE urls SET views = views + 1 WHERE id = $1;`,
+      [id]
+    );
+    console.log(chalk.green("C: getUrlOpen concluded!"))
+    res.redirect(url)
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 }
