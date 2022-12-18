@@ -3,5 +3,6 @@ CREATE TABLE urls(
 	"userId" INTEGER NOT NULL REFERENCES "users"("id"),
 	"url" TEXT NOT NULL,
 	"shortUrl" VARCHAR(8) NOT NULL,
+	"views" INTEGER NOT NULL DEFAULT(0),
 	"createdAt" TIMESTAMP DEFAULT NOW () NOT NULL
 );
