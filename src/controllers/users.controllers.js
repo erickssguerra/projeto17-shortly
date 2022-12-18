@@ -1,9 +1,11 @@
+import chalk from "chalk";
 import connectionDB from "../database/database.js";
 
-export async function getUsers(req, res) {
+export async function postSignUp(req, res) {
+  const userObject = res.locals.schemaValidatedUser;
   try {
-    const users = await connectionDB.query(`SELECT * FROM users;`);
-    res.status(200).send(users.rows);
+    console.log(chalk.green("C: postSignUp completed!"));
+    res.status(200).send(userObject);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

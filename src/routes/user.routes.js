@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getUsers } from "../controllers/users.controllers.js";
+import { postSignUp } from "../controllers/users.controllers.js";
+import { userSchemaValidation } from "../middlewares/users/userSchemaValidation.middleware.js";
 
-const usersRouter = Router()
+const usersRouter = Router();
 
-usersRouter.get("/users", getUsers);
+usersRouter.post("/sign-up", userSchemaValidation, postSignUp);
 
 export default usersRouter;
