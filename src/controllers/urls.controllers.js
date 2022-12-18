@@ -22,6 +22,12 @@ export async function postUrlShorten(req, res) {
 
 export async function getUrlById(req, res) {
   const { id, shortUrl, url } = res.locals.existingId;
-  console.log(chalk.green("C: getUrlById concluded!"))
+  console.log(chalk.green("C: getUrlById concluded!"));
   res.status(200).send({ id, shortUrl, url });
+}
+
+export async function getUrlOpen(req, res) {
+  const { id, url, shortUrl } = res.locals.existingShortUrl;
+  
+  res.status(200).send({ id, url, shortUrl })
 }
