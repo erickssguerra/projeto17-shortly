@@ -12,10 +12,16 @@ export async function postUrlShorten(req, res) {
        VALUES ($1, $2, $3);`,
       [userId, url, shortUrl]
     );
-    console.log(chalk.green("C: postUrlShorten concluded!"))
+    console.log(chalk.green("C: postUrlShorten concluded!"));
     res.status(201).send({ shortUrl });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
+}
+
+export async function getUrlById(req, res) {
+  const { id, shortUrl, url } = res.locals.existingShortUrl;
+  console.log(chalk.green("C: getUrlById concluded!"))
+  res.status(200).send({ id, shortUrl, url });
 }
