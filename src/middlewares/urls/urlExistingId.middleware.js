@@ -13,7 +13,8 @@ export async function existingId(req, res, next) {
       return res.status(404).send({ message: "Url não encontrada!" });
     } else {
       console.log(chalk.yellow("MW: existingId passed..."));
-      res.locals.existingId = existingId.rows[0];
+      const urlObject = existingId.rows[0]
+      res.locals.existingId = urlObject;
     }
   } catch (err) {
     console.log(err);
