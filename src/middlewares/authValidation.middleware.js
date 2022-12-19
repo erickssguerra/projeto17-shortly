@@ -39,11 +39,11 @@ export async function authValidation(req, res, next) {
 
     delete user.rows[0].password;
     console.log(chalk.yellow("MW: authValidation passed..."));
-    
-    res.locals.authorizedUserId = user.rows[0].id;
+    const userId = user.rows[0].id;
+    res.locals.authorizedUserId = userId;
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
-  next();
+  next()
 }
