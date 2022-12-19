@@ -41,7 +41,14 @@ export async function getUrlOpen(req, res) {
   }
 }
 
-export async function deleteUserById(req, res) {
-  const urlId = res.locals.authorizationToDelete;
-  res.status(200).send({ urlId });
+export async function deleteUrlById(req, res) {
+  const urlId = res.locals.authorizationToDelete
+  try {
+    await connectionDB.query(`DELETE FROM urls WHERE id = $1;`, [urlId]);
+    console.log(chalk.green("C: deleteUserById concluded!"));
+    res.status(201).send({ message: "Url apagada com sucesso!" });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 }

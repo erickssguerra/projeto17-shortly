@@ -3,7 +3,7 @@ import {
   postUrlShorten,
   getUrlById,
   getUrlOpen,
-  deleteUserById,
+  deleteUrlById,
 } from "../controllers/urls.controllers.js";
 import { authValidation } from "../middlewares/authValidation.middleware.js";
 import { existingId } from "../middlewares/urls/urlExistingId.middleware.js";
@@ -26,7 +26,7 @@ urlsRouter.delete(
   authValidation,
   existingId,
   isUserAuthor,
-  deleteUserById
+  deleteUrlById
 );
 
 export default urlsRouter;
