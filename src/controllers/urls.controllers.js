@@ -33,10 +33,15 @@ export async function getUrlOpen(req, res) {
       `UPDATE urls SET views = views + 1 WHERE id = $1;`,
       [id]
     );
-    console.log(chalk.green("C: getUrlOpen concluded!"))
-    res.redirect(url)
+    console.log(chalk.green("C: getUrlOpen concluded!"));
+    res.redirect(url);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
+}
+
+export async function deleteUserById(req, res) {
+  const urlId = res.locals.authorizationToDelete;
+  res.status(200).send({ urlId });
 }
