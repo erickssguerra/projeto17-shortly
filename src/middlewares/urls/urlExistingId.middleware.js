@@ -2,7 +2,10 @@ import chalk from "chalk";
 import connectionDB from "../../database/database.js";
 
 export async function existingId(req, res, next) {
-  const id = req.params.id;
+  const id = Number(req.params.id);
+  if (!id){
+    return res.status(400).send({message: "Formato de id inválido."})
+  }
   try {
     const existingId = await connectionDB.query(
       `SELECT * FROM urls WHERE id = $1;`,
