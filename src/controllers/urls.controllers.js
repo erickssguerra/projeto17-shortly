@@ -30,7 +30,7 @@ export async function getUrlOpen(req, res) {
   const { id, url } = res.locals.existingShortUrl;
   try {
     await connectionDB.query(
-      `UPDATE urls SET views = views + 1 WHERE id = $1;`,
+      `UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE id = $1;`,
       [id]
     );
     console.log(chalk.green("C: getUrlOpen concluded!"));
@@ -42,11 +42,34 @@ export async function getUrlOpen(req, res) {
 }
 
 export async function deleteUrlById(req, res) {
-  const urlId = res.locals.authorizationToDelete
+  const urlId = res.locals.authorizationToDelete;
   try {
     await connectionDB.query(`DELETE FROM urls WHERE id = $1;`, [urlId]);
     console.log(chalk.green("C: deleteUserById concluded!"));
     res.status(201).send({ message: "Url apagada com sucesso!" });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+}
+
+export async function getRanking(req, res) {
+  try {
+    const ranking = await connectionDB.query(
+      `SELECT 
+        users.id,
+        users.name,
+        COUNT(urls.id) AS "linksCount",
+        COALESCE(SUM(urls."visitCount"),0) AS "visitCount"
+      FROM users
+      LEFT JOIN urls ON users.id = urls."userId"
+      GROUP BY users.id
+      ORDER BY "visitCount" DESC, "linksCount" DESC
+      LIMIT 10
+     ;`
+    );
+    console.log(chalk.green("C: getRanking concluded!"));
+    res.status(200).send(ranking.rows);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

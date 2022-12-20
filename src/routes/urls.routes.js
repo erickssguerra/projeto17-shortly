@@ -4,6 +4,7 @@ import {
   getUrlById,
   getUrlOpen,
   deleteUrlById,
+  getRanking
 } from "../controllers/urls.controllers.js";
 import { authValidation } from "../middlewares/authValidation.middleware.js";
 import { existingId } from "../middlewares/urls/urlExistingId.middleware.js";
@@ -28,5 +29,6 @@ urlsRouter.delete(
   isUserAuthor,
   deleteUrlById
 );
+urlsRouter.get("/ranking", getRanking)
 
 export default urlsRouter;
