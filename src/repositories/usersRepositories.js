@@ -50,4 +50,4 @@ async function usersMe(userId) {
   return userMetrics.rows[0];
 }
 
-export const userRepositories = { signUp, usersMe };
+export const usersRepositories = { signUp, usersMe };
