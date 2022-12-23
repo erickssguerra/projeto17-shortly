@@ -1,17 +1,14 @@
 import chalk from "chalk";
 import connectionDB from "../database/database.js";
 import { nanoid as shortenUrlCreator } from "nanoid";
+import { urlsRepo } from "../repositories/urlsRepositories.js";
 
 export async function postUrlShorten(req, res) {
   const userId = res.locals.authorizedUserId;
   const url = res.locals.schemaValidatedUrl;
-  const shortUrl = shortenUrlCreator(8);
+  const shortUrl = shortenUrlCreator(6);
   try {
-    await connectionDB.query(
-      `INSERT INTO urls ("userId", url, "shortUrl")
-       VALUES ($1, $2, $3);`,
-      [userId, url, shortUrl]
-    );
+    await urlsRepo.urlInsert(userId, url, shortUrl);
     console.log(chalk.green("C: postUrlShorten concluded!"));
     res.status(201).send({ shortUrl });
   } catch (err) {
@@ -29,10 +26,7 @@ export async function getUrlById(req, res) {
 export async function getUrlOpen(req, res) {
   const { id, url } = res.locals.existingShortUrl;
   try {
-    await connectionDB.query(
-      `UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE id = $1;`,
-      [id]
-    );
+    await urlsRepo.urlOpen(id);
     console.log(chalk.green("C: getUrlOpen concluded!"));
     res.redirect(url);
   } catch (err) {
@@ -44,7 +38,7 @@ export async function getUrlOpen(req, res) {
 export async function deleteUrlById(req, res) {
   const urlId = res.locals.authorizationToDelete;
   try {
-    await connectionDB.query(`DELETE FROM urls WHERE id = $1;`, [urlId]);
+    await urlsRepo.urlDelete(urlId);
     console.log(chalk.green("C: deleteUserById concluded!"));
     res.status(201).send({ message: "Url apagada com sucesso!" });
   } catch (err) {
@@ -55,21 +49,9 @@ export async function deleteUrlById(req, res) {
 
 export async function getRanking(req, res) {
   try {
-    const ranking = await connectionDB.query(
-      `SELECT 
-        users.id,
-        users.name,
-        COUNT(urls.id) AS "linksCount",
-        COALESCE(SUM(urls."visitCount"),0) AS "visitCount"
-      FROM users
-      LEFT JOIN urls ON users.id = urls."userId"
-      GROUP BY users.id
-      ORDER BY "visitCount" DESC, "linksCount" DESC
-      LIMIT 10
-     ;`
-    );
+    const ranking = await urlsRepo.urlRanking();
     console.log(chalk.green("C: getRanking concluded!"));
-    res.status(200).send(ranking.rows);
+    res.status(200).send(ranking);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
