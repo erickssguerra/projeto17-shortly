@@ -9,4 +9,4 @@ async function signIn(userId, token) {
   );
 }
 
-export const sessionsRepository = { signIn };
+export const sessionsRepo = { signIn };
