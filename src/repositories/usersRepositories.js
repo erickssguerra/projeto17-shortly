@@ -44,10 +44,9 @@ async function usersMe(userId) {
       ;`,
       [userId]
     );
-    console.log(userMetricsEmpty.rows[0])
     return userMetricsEmpty.rows[0];
   }
   return userMetrics.rows[0];
 }
 
-export const usersRepositories = { signUp, usersMe };
+export const usersRepo = { signUp, usersMe };
