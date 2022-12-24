@@ -28,7 +28,7 @@ export async function getUrlOpen(req, res) {
   try {
     await urlsRepo.urlOpen(id);
     console.log(chalk.green("C: getUrlOpen concluded!"));
-    res.redirect(url);
+    res.status(200).send(url);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
