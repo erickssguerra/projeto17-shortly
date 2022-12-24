@@ -143,32 +143,32 @@
           ]
         }
         ```
-    - get("/ranking")
-  
-      - get a `body` object limited by the top 10
-  
-        ```
-        [
-          {
-            "id": 1,
-            "name": "Erika",
-            "linksCount": "1",
-            "visitCount": "10"
-          },
-          {
-            "id": 4,
-            "name": "Berg",
-            "linksCount": "1",
-            "visitCount": "1"
-          },
-          {
-            "id": 3,
-            "name": "Erick",
-            "linksCount": "2",
-            "visitCount": "0"
-          }...
-        ]
-        ```
+  - get("/ranking")
+
+    - get a `body` object limited by the top 10
+
+      ```
+      [
+        {
+          "id": 1,
+          "name": "Erika",
+          "linksCount": "1",
+          "visitCount": "10"
+        },
+        {
+          "id": 4,
+          "name": "Berg",
+          "linksCount": "1",
+          "visitCount": "1"
+        },
+        {
+          "id": 3,
+          "name": "Erick",
+          "linksCount": "2",
+          "visitCount": "0"
+        }...
+      ]
+      ```
     
   
 </details>
