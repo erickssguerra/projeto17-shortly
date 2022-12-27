@@ -83,7 +83,7 @@
        ```  
   - post("/urls/shorten")
     
-    - send an token authorization via `headers`
+    - send a token authorization via `headers`
         ```
           {
           "authorization": "Bearer token"
