@@ -1,5 +1,5 @@
 # projeto17-shortly
-- An API designed for shortening URLs and ranking those more clicked.
+- An API designed for shortening URLs and ranking the most viewed ones.
 <details>
   <summary>
     🛠 Tools and technologies
